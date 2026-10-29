@@ -1,10 +1,10 @@
 
-# Python virtual environment
+# Python virtual environments
 .venv/
 venv/
 env/
 
-# Python cache and tests
+# Python cache and test output
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -14,7 +14,53 @@ __pycache__/
 .env.*
 !.env.example
 
-# Editor and OS files
+# Python test coverage
+.coverage
+htmlcov/
+
+# Node.js logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Node.js dependencies
+node_modules/
+jspm_packages/
+bower_components/
+.pnpm-store/
+
+# Node.js build and cache output
+build/Release/
+coverage/
+.nyc_output/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.astro/
+.vite/
+.turbo/
+dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# Package manager files
+.npm/
+.yarn-integrity
+.pnp.*
+
+# Editor and operating system files
 .vscode/
+.vscode-test/
 .DS_Store
 Thumbs.db
+
+# Other generated files
+*.tgz
+*.lcov

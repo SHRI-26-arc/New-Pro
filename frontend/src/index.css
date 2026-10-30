@@ -1,0 +1,237 @@
+/* FONT IMPORT MUST COME BEFORE TAILWIND */
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* =========================================
+   FORESIGHTX GLOBAL DESIGN SYSTEM
+========================================= */
+
+:root {
+  color-scheme: dark;
+
+  --font-display: 'Josefin Sans', 'Trebuchet MS', sans-serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', sans-serif;
+
+  --bg: #090d11;
+  --sidebar: #0c1116;
+  --panel: #121a20;
+  --panel-raised: #19232b;
+
+  --text: #eef2f4;
+  --muted: #a5b0b6;
+  --subtle: #87959c;
+
+  --cyan: #a8cad4;
+  --green: #a5c4af;
+  --amber: #d5b17e;
+  --red: #d99498;
+  --blue: #a8bad3;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: var(--text);
+  background: var(--bg);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+  background: var(--bg);
+}
+
+body {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+
+  color: var(--text);
+  background: var(--bg);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   REACT ROOT
+========================================= */
+
+#root {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+
+  color: var(--text);
+  background: var(--bg);
+
+  font-family: var(--font-body);
+  text-align: left;
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+
+  color: var(--text);
+
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+p {
+  margin-top: 0;
+  color: inherit;
+}
+
+strong,
+b {
+  font-weight: 600;
+}
+
+small {
+  font-family: var(--font-body);
+}
+
+/* =========================================
+   FORM ELEMENTS
+========================================= */
+
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-body);
+  font-size: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+input,
+textarea,
+select {
+  color: var(--text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--subtle);
+}
+
+/* =========================================
+   LINKS
+========================================= */
+
+a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+a:hover {
+  color: #c2dce3;
+}
+
+/* =========================================
+   MEDIA
+========================================= */
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+img {
+  display: block;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #35444c var(--bg);
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #35444c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #52646e;
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

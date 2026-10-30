@@ -1,0 +1,266 @@
+/* ==========================================
+   FORESIGHTX — AUTHENTICATION
+   Global theme inherited from index.css
+========================================== */
+
+.auth-shell {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 20px;
+  color: var(--text);
+  background: var(--bg);
+  font-family: var(--font-body);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 410px;
+  padding: 24px 12px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* HEADING */
+
+.auth-heading {
+  margin-bottom: 30px;
+}
+
+.auth-eyebrow {
+  display: inline-block;
+  color: var(--cyan);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+}
+
+.auth-heading h1 {
+  margin: 15px 0 9px;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 35px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+}
+
+.auth-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* TEXT-ONLY TABS */
+
+.auth-mode-switch {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 29px;
+  padding: 0;
+  background: transparent;
+}
+
+.auth-tab {
+  position: relative;
+  padding: 8px 0;
+  border: none;
+  border-radius: 0;
+  color: var(--subtle);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.auth-tab:hover {
+  color: var(--text);
+}
+
+.auth-tab.active-tab {
+  color: var(--cyan);
+  background: transparent;
+}
+
+/* FORM */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  color: #d5dfe2;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.form-field input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 0;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  color: var(--text);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.form-field input::placeholder {
+  color: var(--subtle);
+}
+
+/* OPEN INPUT LAYOUT */
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: var(--muted);
+  background: transparent;
+}
+
+.input-wrapper:focus-within {
+  color: var(--cyan);
+}
+
+.input-wrapper input {
+  flex: 1;
+}
+
+.password-toggle {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.password-toggle:hover {
+  color: var(--cyan);
+}
+
+/* PASSWORD OPTIONS */
+
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -9px;
+}
+
+.forgot-button {
+  padding: 0;
+  border: none;
+  color: var(--cyan);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.password-hint {
+  margin-top: -10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* SUBMIT BUTTON */
+
+.auth-submit {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 5px;
+  padding: 13px 19px;
+  border: none;
+  border-radius: 999px;
+  color: #10191d;
+  background: var(--cyan);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.auth-submit:hover {
+  background: #c2dce3;
+  transform: translateY(-1px);
+}
+
+/* NOTICES */
+
+.auth-notice {
+  margin-top: 18px;
+  color: var(--green);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* SECURITY */
+
+.auth-security {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 29px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.auth-security svg {
+  flex-shrink: 0;
+  color: var(--green);
+}
+
+/* ACCESSIBILITY */
+
+.auth-shell button:focus-visible,
+.auth-shell input:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 480px) {
+  .auth-shell {
+    padding: 20px 14px;
+  }
+
+  .auth-card {
+    padding: 25px 10px;
+  }
+
+  .auth-heading h1 {
+    font-size: 30px;
+  }
+}

@@ -1,0 +1,297 @@
+
+import { useState, type FormEvent } from 'react'
+import {
+  ArrowRight,
+  Eye,
+  EyeOff,
+  LockKeyhole,
+  Mail,
+  ShieldCheck,
+} from 'lucide-react'
+
+import Dashboard from './dashboard'
+import './App.css'
+
+type AuthMode = 'signin' | 'signup'
+
+function App() {
+  const [mode, setMode] = useState<AuthMode>('signin')
+  const [showPassword, setShowPassword] = useState(false)
+  const [notice, setNotice] = useState('')
+  const [showDashboard, setShowDashboard] = useState(false)
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    if (mode === 'signin') {
+      setNotice('')
+      setShowDashboard(true)
+    } else {
+      setNotice(
+        'Registration is a frontend prototype. Backend authentication is not connected yet.'
+      )
+    }
+  }
+
+  function changeMode(nextMode: AuthMode) {
+    setMode(nextMode)
+    setNotice('')
+    setShowPassword(false)
+  }
+
+  // Show dashboard after demonstration sign-in.
+  if (showDashboard) {
+    return (
+      <Dashboard
+        onSignOut={() => {
+          setShowDashboard(false)
+          setMode('signin')
+          setNotice('')
+        }}
+      />
+    )
+  }
+
+  return (
+    <main className="auth-shell">
+      <section className="auth-brand-panel">
+        <header className="brand-header">
+          <div className="brand-symbol">F</div>
+          <span className="brand-name">
+            FORESIGHT<span>X</span>
+          </span>
+        </header>
+
+        <div className="brand-copy">
+          <span className="brand-eyebrow">
+            SUPPLY CHAIN INTELLIGENCE PLATFORM
+          </span>
+
+          <h1 className="brand-title">
+            See the risk
+            <br />
+            before it <span>unfolds.</span>
+          </h1>
+
+          <p className="brand-description">
+            Anticipate disruptions. Evaluate recovery strategies.
+            Understand the consequences before making a decision.
+          </p>
+        </div>
+
+        <div className="network-card">
+          <div className="network-card-header">
+            <span>SUPPLY NETWORK</span>
+            <span className="network-status">
+              <span className="status-dot" />
+              INTELLIGENCE
+            </span>
+          </div>
+
+          <div className="network-route">
+            <div className="route-node">
+              <div className="node-circle">01</div>
+              <span>ORIGIN</span>
+            </div>
+
+            <div className="route-line">
+              <span />
+              <span />
+              <span />
+            </div>
+
+            <div className="route-node">
+              <div className="node-circle active-node">02</div>
+              <span>NETWORK</span>
+            </div>
+
+            <div className="route-line">
+              <span />
+              <span />
+              <span />
+            </div>
+
+            <div className="route-node">
+              <div className="node-circle">03</div>
+              <span>DESTINATION</span>
+            </div>
+          </div>
+
+          <p className="network-caption">
+            Visibility across the supply chain.
+          </p>
+        </div>
+
+        <footer className="brand-footer">
+          <span>FORESIGHTX</span>
+          <span>INTELLIGENCE · RESILIENCE · VISIBILITY</span>
+        </footer>
+      </section>
+
+      <section className="auth-form-panel">
+        <div className="auth-card">
+          <div className="auth-heading">
+            <span className="auth-eyebrow">SECURE WORKSPACE</span>
+
+            <h2>
+              {mode === 'signin'
+                ? 'Welcome back.'
+                : 'Create your account.'}
+            </h2>
+
+            <p>
+              {mode === 'signin'
+                ? 'Sign in to access your supply chain intelligence workspace.'
+                : 'Set up your access to the FORESIGHTX workspace.'}
+            </p>
+          </div>
+
+          <div
+            className="auth-mode-switch"
+            role="tablist"
+            aria-label="Account access"
+          >
+            <button
+              type="button"
+              role="tab"
+              aria-selected={mode === 'signin'}
+              className={
+                mode === 'signin' ? 'auth-tab active-tab' : 'auth-tab'
+              }
+              onClick={() => changeMode('signin')}
+            >
+              Sign in
+            </button>
+
+            <button
+              type="button"
+              role="tab"
+              aria-selected={mode === 'signup'}
+              className={
+                mode === 'signup' ? 'auth-tab active-tab' : 'auth-tab'
+              }
+              onClick={() => changeMode('signup')}
+            >
+              Create account
+            </button>
+          </div>
+
+          <form className="auth-form" onSubmit={handleSubmit}>
+            {mode === 'signup' && (
+              <div className="form-field">
+                <label htmlFor="fullName">Full name</label>
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  placeholder="Enter your full name"
+                  autoComplete="name"
+                  required
+                />
+              </div>
+            )}
+
+            <div className="form-field">
+              <label htmlFor="email">Email address</label>
+
+              <div className="input-wrapper">
+                <Mail size={18} />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="name@company.com"
+                  autoComplete="email"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-field">
+              <label htmlFor="password">Password</label>
+
+              <div className="input-wrapper">
+                <LockKeyhole size={18} />
+
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Enter your password"
+                  autoComplete={
+                    mode === 'signin' ? 'current-password' : 'new-password'
+                  }
+                  minLength={8}
+                  required
+                />
+
+                <button
+                  type="button"
+                  className="password-toggle"
+                  aria-label={
+                    showPassword ? 'Hide password' : 'Show password'
+                  }
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {mode === 'signin' && (
+              <div className="forgot-row">
+                <button
+                  type="button"
+                  className="forgot-button"
+                  onClick={() =>
+                    setNotice(
+                      'Password recovery will be connected with backend authentication.'
+                    )
+                  }
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
+
+            {mode === 'signup' && (
+              <p className="password-hint">
+                Use at least 8 characters for your password.
+              </p>
+            )}
+
+            <button type="submit" className="auth-submit">
+              <span>
+                {mode === 'signin'
+                  ? 'Sign in to workspace'
+                  : 'Create account'}
+              </span>
+              <ArrowRight size={18} />
+            </button>
+          </form>
+
+          {notice && (
+            <div className="auth-notice" role="status">
+              {notice}
+            </div>
+          )}
+
+          <div className="auth-security">
+            <ShieldCheck size={17} />
+            <span>Secure workspace access</span>
+          </div>
+
+          <p className="auth-disclaimer">
+            FORESIGHTX · Supply chain resilience platform
+          </p>
+        </div>
+      </section>
+    </main>
+  )
+}
+
+export default App

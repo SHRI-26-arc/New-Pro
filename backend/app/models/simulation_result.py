@@ -24,5 +24,11 @@ class SimulationResult(BaseModel):
 
     risk_level: Literal["low", "medium", "high", "critical", "unknown"]
 
+    data_freshness_status: Literal[
+        "fresh",
+        "stale",
+        "unknown",
+    ] = "unknown"
+
     assumptions: list[str] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)

@@ -1,5 +1,5 @@
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from backend.app.models.shipment import Shipment
 from backend.app.models.recovery_plan import RecoveryPlan
@@ -27,6 +27,40 @@ class SimulationEngine:
         warnings = []
         reasons = []
         inventory_remaining = None
+
+        # Check whether recovery-plan data is recent enough.
+        data_freshness_status = "unknown"
+
+        if plan.data_updated_at is None:
+            warnings.append(
+                "Recovery-plan data freshness is unknown "
+                "because no update timestamp was provided."
+            )
+        else:
+            updated_at = plan.data_updated_at
+            reference_time = current_time
+
+            # Normalize timezone handling for comparison.
+            if updated_at.tzinfo is None and reference_time.tzinfo is not None:
+                updated_at = updated_at.replace(tzinfo=reference_time.tzinfo)
+            elif updated_at.tzinfo is not None and reference_time.tzinfo is None:
+                reference_time = reference_time.replace(tzinfo=updated_at.tzinfo)
+
+            data_age = reference_time - updated_at
+
+            if data_age < timedelta(0):
+                warnings.append(
+                    "Data update timestamp is in the future; "
+                    "freshness cannot be verified."
+                )
+            elif data_age <= timedelta(minutes=30):
+                data_freshness_status = "fresh"
+            else:
+                data_freshness_status = "stale"
+                warnings.append(
+                    "Recovery-plan data is older than 30 minutes "
+                    "and requires verification."
+                )
 
         elapsed_minutes = max(
             0,
@@ -165,6 +199,7 @@ class SimulationEngine:
             additional_cost=plan.additional_cost,
             inventory_remaining=inventory_remaining,
             risk_level=risk_level,
+            data_freshness_status=data_freshness_status,
             assumptions=assumptions,
             warnings=warnings,
         )

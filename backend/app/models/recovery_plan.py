@@ -1,5 +1,6 @@
 
 from typing import Literal
+from datetime import datetime
 
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -41,4 +42,26 @@ class RecoveryPlan(BaseModel):
         ge=0,
     )
 
+    # Downstream impact: effects on other shipments or hospitals
+    affects_other_shipment: bool = False
+    downstream_impact_assessed: bool = False
+    affected_shipment_id: str | None = None
+    affected_destination: str | None = None
+
+    downstream_delay_minutes: int = Field(
+        default=0,
+        ge=0,
+    )
+    downstream_priority: Literal[
+        "low",
+        "medium",
+        "high",
+        "critical",
+    ] | None = None
+
+    # Set true only when the scenario establishes a reserve breach.
+    downstream_reserve_breach: bool = False
+
     description: str = ""
+    # Timestamp indicating when recovery-plan data was last updated.
+    data_updated_at: datetime | None = None

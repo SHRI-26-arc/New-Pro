@@ -139,17 +139,18 @@ def save_simulation(
             )
 
         # 4. Save the decision.
+        decision_id = str(uuid4())
         cursor.execute(
             """
             INSERT INTO FORESIGHTX_DECISIONS (
-                DECISION_ID, SHIPMENT_ID, RECOMMENDED_PLAN_ID,
-                DECISION_STATUS, RECOMMENDATION_REASON,
-                HUMAN_APPROVAL_REQUIRED, DECISION_PAYLOAD
+            DECISION_ID, SHIPMENT_ID, RECOMMENDED_PLAN_ID,
+            DECISION_STATUS, RECOMMENDATION_REASON,
+            HUMAN_APPROVAL_REQUIRED, DECISION_PAYLOAD
             )
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                str(uuid4()),
+                decision_id,
                 shipment_id,
                 decision.get("recommended_plan_id"),
                 decision.get("status", "human_review_required"),
@@ -164,6 +165,7 @@ def save_simulation(
         return {
             "saved": True,
             "shipment_id": shipment_id,
+            "decision_id": decision_id,
             "plans_saved": len(plans),
             "results_saved": len(results),
             "decision_saved": True,

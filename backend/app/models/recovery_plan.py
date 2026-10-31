@@ -20,6 +20,12 @@ class RecoveryPlan(BaseModel):
     ]
 
     estimated_travel_minutes: int = Field(ge=0)
+    # Additional delay caused by the disruption.
+    # None means unknown; 0 means explicitly no additional delay.
+    disruption_delay_minutes: int | None = Field(
+        default=None,
+        ge=0,
+    )
     additional_cost: float = Field(ge=0)
 
     # Alternate vehicle details

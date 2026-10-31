@@ -28,7 +28,7 @@ class SimulationEngine:
         reasons = []
         inventory_remaining = None
 
-        # Check whether recovery-plan data is recent enough.
+        # Check recovery-plan data freshness.
         data_freshness_status = "unknown"
 
         if plan.data_updated_at is None:
@@ -40,7 +40,6 @@ class SimulationEngine:
             updated_at = plan.data_updated_at
             reference_time = current_time
 
-            # Normalize timezone handling for comparison.
             if updated_at.tzinfo is None and reference_time.tzinfo is not None:
                 updated_at = updated_at.replace(tzinfo=reference_time.tzinfo)
             elif updated_at.tzinfo is not None and reference_time.tzinfo is None:
@@ -62,6 +61,7 @@ class SimulationEngine:
                     "and requires verification."
                 )
 
+        # Calculate elapsed time since shipment departure.
         elapsed_minutes = max(
             0,
             int(
@@ -70,10 +70,33 @@ class SimulationEngine:
             ),
         )
 
-        estimated_arrival_minutes = (
+        # Calculate base arrival estimate.
+        base_arrival_minutes = (
             elapsed_minutes + plan.estimated_travel_minutes
         )
 
+        # Apply scenario-supplied disruption delay.
+        if plan.disruption_delay_minutes is not None:
+            disruption_delay = plan.disruption_delay_minutes
+
+            estimated_arrival_minutes = (
+                base_arrival_minutes + disruption_delay
+            )
+
+            assumptions.append(
+                f"Disruption adds an estimated {disruption_delay} "
+                "minutes to this recovery plan."
+            )
+        else:
+            estimated_arrival_minutes = base_arrival_minutes
+
+            warnings.append(
+                "Disruption delay is unknown. The displayed arrival "
+                "estimate excludes any additional disruption delay "
+                "and must not be treated as a confirmed ETA."
+            )
+
+        # Calculate delivery deadline delay.
         deadline_minutes = int(
             (
                 shipment.deadline - shipment.departure_time
@@ -166,8 +189,7 @@ class SimulationEngine:
                         "Minimum inventory reserve is unknown."
                     )
                 elif (
-                    inventory_remaining
-                    < plan.inventory_min_reserve
+                    inventory_remaining < plan.inventory_min_reserve
                 ):
                     reasons.append(
                         "Using this inventory would breach the "

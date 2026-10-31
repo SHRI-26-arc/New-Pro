@@ -93,7 +93,8 @@ class DecisionEngine:
         return {
             "score": score,
             "score_band": (
-                "low" if score < 25
+                "unknown" if missing_information
+                else "low" if score < 25
                 else "moderate" if score < 50
                 else "high" if score < 75
                 else "very_high"

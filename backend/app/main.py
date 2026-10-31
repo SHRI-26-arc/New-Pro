@@ -5,7 +5,7 @@ from backend.app.models.simulation_request import SimulationRequest
 from backend.app.models.simulation_result import SimulationResult
 from backend.app.simulation.engine import SimulationEngine
 from backend.app.decision_engine import DecisionEngine
-
+from backend.app.database.hana_repository import save_simulation
 
 app = FastAPI(
     title="FORESIGHTX API",
@@ -49,12 +49,27 @@ def simulate_recovery_plans(request: SimulationRequest):
         )
         results.append(result)
 
-    decision = decision_engine.rank_plans(results,request.plans)
-
+    decision = decision_engine.rank_plans(
+        results,
+        request.plans,
+    )
+    persistence = save_simulation(
+        shipment=request.shipment.model_dump(),
+        plans=[
+            plan.model_dump()
+            for plan in request.plans
+        ],
+        results=[
+            result.model_dump()
+            for result in results
+        ],
+        decision=decision,
+    )
     return {
         "shipment_id": request.shipment.shipment_id,
         "simulation_results": [
             result.model_dump() for result in results
         ],
         "decision": decision,
+        "persistence": persistence,
     }
